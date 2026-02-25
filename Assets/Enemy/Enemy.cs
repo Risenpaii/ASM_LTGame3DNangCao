@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
     private GameObject player;
     //public GameObject debuggShere;
     public GameObject particlePrefab;
-    public GameObject spawnKey;
+    //public GameObject spawnKey;
     public float timeStopPar;
     private Vector3 lastKnowPos;
     public NavMeshAgent Agent { get => agent; }
@@ -29,7 +29,6 @@ public class Enemy : MonoBehaviour
     public float fireRate;
     [SerializeField]
     private string currentState;
-    private Animation anm;
     public AudioSource boomSound;
 
     private EnemyHealth enemyHealth;
@@ -38,7 +37,6 @@ public class Enemy : MonoBehaviour
         stateMachine = GetComponent<StateMachine>();
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag("Player");
-        anm = GetComponent<Animation>();
         stateMachine.Initialise();
         boomSound = GetComponent<AudioSource>();
         enemyHealth = GetComponent<EnemyHealth>();
@@ -79,8 +77,7 @@ public class Enemy : MonoBehaviour
     }
     private void OnCollisionEnter(Collision col)
     {
-        timeStopPar += Time.deltaTime;
-        if (col.transform.CompareTag("Bullet"))
+        if (col.transform.CompareTag("Bullett"))
         {
             transform.GetComponent<EnemyHealth>().TakeDamage(10);
         }
@@ -102,10 +99,8 @@ public class Enemy : MonoBehaviour
             // Hủy Particle System sau khi nó kết thúc
             Destroy(particle, ps.main.duration + ps.main.startLifetime.constantMax);
         }
-        Instantiate(spawnKey, transform.position, Quaternion.identity);
-
+        //Instantiate(spawnKey, transform.position, Quaternion.identity);
         // Hủy GameObject này
         Destroy(gameObject);
     }
-
 }
